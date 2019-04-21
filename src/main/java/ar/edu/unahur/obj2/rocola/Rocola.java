@@ -20,11 +20,13 @@ public class Rocola {
         return discos.stream()
                 .flatMap(d -> d.getListaCanciones().stream())
                 .sorted()
-                .collect(Collectors.toCollection(LinkedHashSet::new));
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 
     public Set<Disco> discos() {
-        return discos.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new));
+        return discos.stream()
+                .sorted()
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     public Set<Artista> artistas() {
@@ -41,8 +43,10 @@ public class Rocola {
      * @return
      */
     public Set<Disco> discosPorGenero(Genero genero) {
-        return discos.stream().filter(disco -> disco.getGenero().equals(genero))
-                .sorted().collect(Collectors.toCollection(LinkedHashSet::new));
+        return discos.stream()
+                .filter(disco -> disco.getGenero().equals(genero))
+                .sorted()
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     public Set<Disco> discosPorGeneroOptimizado(Genero genero) {
@@ -59,17 +63,37 @@ public class Rocola {
      * @return
      */
     public Set<Cancion> cancionesPorGenero(Genero genero) {
-        return discosPorGenero(genero).stream()
+        return this.discosPorGenero(genero).stream()
                 .flatMap(d -> d.getListaCanciones().stream())
                 .sorted()
                 .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     public Set<Cancion> cancionesPorGeneroOptimizado(Genero genero) {
-        return discosPorGenero(genero).stream()
+        return discos.stream()
+                .filter(disco -> disco.getGenero().equals(genero))
                 .flatMap(d -> d.getListaCanciones().stream())
                 .sorted()
                 .collect(Collectors.toCollection(LinkedHashSet::new));
+    }
+
+    public void reproducirCancion(Cancion cancion) {
+        if (!canciones().contains(cancion))
+            throw new RuntimeException("Cancionn inexistente");
+
+        canciones()
+                .stream()
+                .filter(c -> c.equals(cancion))
+                .findAny()
+                .orElseThrow(RuntimeException::new)
+                .play();
+    }
+
+    public void reproducirDisco(Disco disco) {
+
+
+
+
     }
 
 

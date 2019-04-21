@@ -55,7 +55,7 @@ public class RocolaTest {
 
     @Test
     public void testCanciones() {
-        Set<Cancion> cancionesEsperadas = Stream.of(cancion1,cancion2, cancion3, cancion4, cancion5, cancion6, cancion7,
+        Set<Cancion> cancionesEsperadas = Stream.of(cancion1, cancion2, cancion3, cancion4, cancion5, cancion6, cancion7,
                 cancion8, cancion9, cancion10).collect(Collectors.toSet());
 
         Assert.assertEquals(rocola.canciones(), cancionesEsperadas);
@@ -70,7 +70,7 @@ public class RocolaTest {
 
     @Test
     public void testArtistas() {
-        Set<Artista> artistasEsperados = Stream.of(artista1,artista2).collect(Collectors.toSet());
+        Set<Artista> artistasEsperados = Stream.of(artista1, artista2).collect(Collectors.toSet());
 
         Assert.assertEquals(rocola.artistas(), artistasEsperados);
     }
@@ -86,7 +86,6 @@ public class RocolaTest {
     @Test
     public void testDiscosPorGeneroOptimizadoRock() {
         Set<Disco> discosDeRock = Stream.of(disco1, disco3).collect(Collectors.toSet());
-
         Assert.assertEquals(rocola.discosPorGeneroOptimizado(Genero.Rock), discosDeRock);
     }
 
@@ -103,4 +102,41 @@ public class RocolaTest {
 
         Assert.assertEquals(rocola.cancionesPorGenero(Genero.Pop), cancionesDePop);
     }
+
+    @Test
+    public void testEstadistica() {
+        Artista artista = new Artista("Artista A",
+                Stream.of(disco1, disco2).collect(Collectors.toSet()),
+                new EstadisticaStandard());
+
+        artista.play();
+
+        Artista artista10 = new Artista("Artista 10",
+                Stream.of(disco1, disco2).collect(Collectors.toSet()),
+                new Estadistica10());
+
+        artista10.play();
+
+
+        System.out.println(artista.getEstadista());
+
+        System.out.println(artista10.getEstadista());
+
+
+    }
+
+    @Test
+    public void testComparacion() {
+        Cancion cancion1 = new Cancion("cancion1", 10);
+        Cancion cancion2 = new Cancion("cancion1", 10);
+        cancion1= cancion2;
+
+        if (cancion1.equals(cancion2)) {
+            System.out.println("equals");
+        } else {
+            System.out.printf("Son distintos");
+        }
+    }
+
+
 }

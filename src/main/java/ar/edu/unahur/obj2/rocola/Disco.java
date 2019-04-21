@@ -2,18 +2,21 @@ package ar.edu.unahur.obj2.rocola;
 
 import java.util.Set;
 
-public class Disco implements Comparable<Disco> {
+public class Disco implements Comparable<Disco>, Reproducible {
 
     private String titulo;
     private Artista artista;
     private Genero genero;
     private Set<Cancion> listaCanciones;
 
+    private int cantidadReproducciones = 0;
+
+
     public Disco(String titulo,  Genero genero, Set<Cancion> listaCanciones) {
         this.titulo = titulo;
         this.genero = genero;
         this.listaCanciones = listaCanciones;
-        this.listaCanciones.forEach(c -> c.agregarDisco(this));
+            this.listaCanciones.forEach(c -> c.agregarDisco(this));
     }
 
     public void setArtista(Artista artista) {
@@ -36,8 +39,16 @@ public class Disco implements Comparable<Disco> {
         return listaCanciones;
     }
 
+    public void play() {
+        listaCanciones.forEach(c -> c.play());
+        cantidadReproducciones++;
+
+    }
+
     @Override
     public int compareTo(Disco o) {
         return this.titulo.compareTo(o.titulo);
     }
+
+
 }

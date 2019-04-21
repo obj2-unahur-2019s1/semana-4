@@ -1,0 +1,12 @@
+@startuml
+enum Genero
+
+Rocola o- Disco : tiene >
+Artista o- Disco
+Disco -- Artista : pertenece a >
+Disco o- Cancion : Contiene >
+Disco -- Genero : es de >
+Cancion -- Disco : Incluida >
+
+
+@enduml
